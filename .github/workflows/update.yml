@@ -1,0 +1,46 @@
+# 毎朝6時（日本時間）に各サイトから取り直して、GitHub Pages に公開する
+name: 公演データを更新
+
+on:
+  schedule:
+    - cron: "0 21 * * *"  # UTC 21:00 = 日本時間 6:00
+  workflow_dispatch:       # GitHub の画面から手動でも実行できる
+  push:
+    branches: [main]
+    paths-ignore: ["data/**"]
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: update
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Tokyo
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - name: 各サイトから取得
+        run: python scraper.py
+      - name: 取得したデータを保存
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git diff --cached --quiet || git commit -m "公演データを更新 $(date +'%Y-%m-%d %H:%M')"
+          git push
+      - name: 公開するファイルをまとめる
+        run: mkdir -p _site/data && cp index.html robots.txt _site/ && cp data/concerts.json _site/data/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4

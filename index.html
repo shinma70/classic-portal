@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>クラシック公演ポータル</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="公演ポータル">
+<meta name="theme-color" content="#f7f5f0">
+<style>
+  :root {
+    --bg: #f7f5f0; --surface: #fff; --ink: #1f1d1a; --muted: #6d6860; --line: #e4e0d7;
+    --accent: #7a2e2e; --nhk: #1d4e89; --tmso: #8a3b12; --tso: #2f6b3a; --okepi: #b8561b;
+    --star: #c99a06; --go: #2e7d4f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #17161a; --surface: #222127; --ink: #ece9e3; --muted: #a39e95; --line: #35333a;
+      --accent: #e08a7a; --nhk: #7fb0ec; --tmso: #ec9a6c; --tso: #86c995; --okepi: #f0a060; --star: #f0c63e; --go: #6fcf97;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+    font-family: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", system-ui, sans-serif;
+    font-size: 15px; line-height: 1.55; }
+  a { color: inherit; }
+  header { position: sticky; top: 0; z-index: 10; background: var(--bg); border-bottom: 1px solid var(--line); }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  .top { display: flex; align-items: center; gap: 12px; padding: 14px 0 8px; flex-wrap: wrap; }
+  h1 { font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-size: 22px; margin: 0; font-weight: 600; letter-spacing: .04em; }
+  .updated { color: var(--muted); font-size: 12px; margin-left: auto; }
+  button, select, input { font: inherit; color: inherit; }
+  .btn { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  .btn:hover { border-color: var(--muted); }
+  .btn[disabled] { opacity: .6; cursor: wait; }
+  .tabs { display: flex; gap: 4px; }
+  .tab { border: none; background: none; padding: 8px 12px; cursor: pointer; border-bottom: 2px solid transparent; color: var(--muted); }
+  .tab.on { color: var(--ink); border-bottom-color: var(--accent); font-weight: 600; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 10px 0 12px; }
+  .chip { border: 1px solid var(--line); background: var(--surface); border-radius: 999px; padding: 4px 12px; cursor: pointer; font-size: 14px; user-select: none; }
+  .chip.on { color: #fff; border-color: transparent; }
+  .chip.on[data-o="N響"] { background: var(--nhk); } .chip.on[data-o="都響"] { background: var(--tmso); } .chip.on[data-o="東響"] { background: var(--tso); }
+  .chip.on.plain { background: var(--accent); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .chip.on { color: #111; } }
+  input[type=search], select { border: 1px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 10px; }
+  input[type=search] { flex: 1 1 220px; min-width: 0; }
+  .count { color: var(--muted); font-size: 13px; }
+  main { padding: 8px 0 60px; }
+  h2.month { font-family: "Hiragino Mincho ProN", "Yu Mincho", serif; font-weight: 600; font-size: 18px; margin: 26px 0 8px; padding-bottom: 4px; border-bottom: 1px solid var(--line); }
+  .card { display: grid; grid-template-columns: 76px 1fr auto; gap: 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin: 8px 0; }
+  .card.starred { border-color: var(--star); box-shadow: inset 3px 0 0 var(--star); }
+  .date { text-align: center; line-height: 1.2; }
+  .date .d { font-size: 22px; font-weight: 600; }
+  .date .w { font-size: 13px; color: var(--muted); }
+  .date .w.sat { color: #2a6ad1; } .date .w.sun { color: #c2372e; }
+  .date .t { font-size: 13px; margin-top: 4px; }
+  .meta { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; font-size: 12px; margin-bottom: 2px; }
+  .orch { color: #fff; border-radius: 4px; padding: 1px 7px; font-weight: 600; }
+  .orch[data-o="N響"] { background: var(--nhk); } .orch[data-o="都響"] { background: var(--tmso); } .orch[data-o="東響"] { background: var(--tso); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .orch { color: #111; } }
+  .series { border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; color: var(--muted); }
+  .title { font-weight: 600; font-size: 16px; margin: 2px 0; }
+  .title a { text-decoration: none; } .title a:hover { text-decoration: underline; }
+  .hall { color: var(--muted); font-size: 13px; }
+  .perf { font-size: 14px; margin-top: 4px; }
+  .prog { font-size: 13.5px; margin-top: 4px; color: var(--ink); padding-left: 10px; border-left: 2px solid var(--line); }
+  .prog div { overflow-wrap: anywhere; }
+  mark { background: #f6e3a1; color: inherit; border-radius: 2px; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) mark { background: #6b5718; } }
+  .side { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .card.going { border-color: var(--go); box-shadow: inset 4px 0 0 var(--go); }
+  .marks { display: flex; gap: 6px; }
+  .mark { border: 1px solid var(--line); background: none; border-radius: 6px; font-size: 12px; padding: 3px 8px; cursor: pointer; color: var(--muted); white-space: nowrap; }
+  .mark:hover { border-color: var(--muted); }
+  .mark.want.on { border-color: var(--star); color: var(--star); font-weight: 600; }
+  .mark.going.on { border-color: var(--go); background: var(--go); color: #fff; font-weight: 600; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mark.going.on { color: #111; } }
+  .gobadge { background: var(--go); color: #fff; border-radius: 4px; padding: 1px 7px; font-weight: 600; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .gobadge { color: #111; } }
+  .okebtn { border: 1px solid var(--okepi); color: var(--okepi); background: none; border-radius: 6px; font-size: 12px; padding: 3px 8px; cursor: pointer; white-space: nowrap; }
+  .okebtn b { font-size: 13px; }
+  .okelist { grid-column: 1 / -1; border-top: 1px dashed var(--line); padding-top: 8px; display: none; }
+  .card.open .okelist { display: block; }
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 12px; }
+  td.price { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .down { color: var(--okepi); font-size: 11px; margin-left: 4px; }
+  .empty { color: var(--muted); padding: 40px 0; text-align: center; }
+  .errors { background: #fbe9e7; color: #8a2a1d; border-radius: 8px; padding: 8px 12px; margin-top: 12px; font-size: 13px; }
+  .tablewrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+  .sale { display: grid; grid-template-columns: 110px 1fr auto; gap: 14px; align-items: start; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin: 8px 0; }
+  .sale.past { opacity: .6; }
+  .sale.hot { border-color: var(--star); box-shadow: inset 3px 0 0 var(--star); }
+  .sale .when { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .sale .when small { display: block; font-weight: 400; color: var(--muted); }
+  .cd { display: inline-block; margin-top: 4px; font-size: 12px; border-radius: 4px; padding: 0 6px; border: 1px solid var(--line); color: var(--muted); }
+  .cd.soon { border-color: var(--accent); background: var(--accent); color: #fff; }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .cd.soon { color: #111; } }
+  .sale .what { font-weight: 600; }
+  .sale .label { font-weight: 400; color: var(--muted); margin-left: 6px; }
+  .sale details { font-size: 13px; margin-top: 4px; }
+  .sale summary { cursor: pointer; color: var(--muted); }
+  .sale details ul { margin: 4px 0 0; padding-left: 18px; }
+  .hotnote { color: var(--star); font-size: 12px; font-weight: 600; margin-left: 6px; }
+  .sale .acts { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+  .sale .acts a { font-size: 12px; }
+  .section-note { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+  .news li { margin: 6px 0; font-size: 14px; }
+  .news { padding-left: 18px; }
+  dialog { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); color: var(--ink); max-width: min(520px, calc(100vw - 32px)); padding: 18px; }
+  dialog::backdrop { background: rgba(0, 0, 0, .35); }
+  #subs-list li { margin: 4px 0; }
+  #subs-list button { margin-left: 8px; font-size: 12px; padding: 1px 8px; }
+  @media (max-width: 640px) {
+    .sale { grid-template-columns: 1fr; gap: 6px; }
+    .sale .acts { flex-direction: row; align-items: center; }
+  }
+  @media (max-width: 640px) {
+    header { position: static; }
+    .card { grid-template-columns: 56px 1fr; }
+    .side { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; justify-content: flex-start; }
+    .date .d { font-size: 19px; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="top">
+      <h1>クラシック公演ポータル</h1>
+      <div class="tabs">
+        <button class="tab on" data-view="concerts">公演一覧</button>
+        <button class="tab" data-view="okepi">おけぴ譲渡</button>
+        <button class="tab" data-view="sales">発売情報</button>
+      </div>
+      <span class="updated" id="updated"></span>
+      <button class="btn" id="refresh">最新に更新</button>
+    </div>
+    <div class="filters">
+      <span class="chip on" data-o="N響">N響</span>
+      <span class="chip on" data-o="都響">都響</span>
+      <span class="chip on" data-o="東響">東響</span>
+      <input type="search" id="q" placeholder="作曲家・指揮者・ソリスト・ホールで検索（スペースで AND）">
+      <select id="month"><option value="">すべての月</option></select>
+      <span class="chip plain" data-flag="weekend">土日祝</span>
+      <span class="chip plain" data-flag="okepi">譲渡あり</span>
+      <span class="chip plain" data-flag="want">★ 行きたい</span>
+      <span class="chip plain" data-flag="going">✓ 行く</span>
+      <span class="count" id="count"></span>
+      <button class="btn" id="subs-open" style="font-size:13px;padding:4px 10px;margin-left:auto">定期会員の設定</button>
+    </div>
+  </div>
+</header>
+<dialog id="subs">
+  <h3 style="margin:0 0 4px">定期会員の設定</h3>
+  <p class="section-note" style="margin:0 0 10px">ここで登録した公演は最初から「✓ 行く」になります。設定はこの端末のブラウザにだけ保存されます（Macとスマホでそれぞれ設定してください）。</p>
+  <ul id="subs-list" style="padding-left:18px;margin:0 0 12px"></ul>
+  <div style="display:flex;gap:6px;flex-wrap:wrap;align-items:center">
+    <select id="subs-orch"><option>N響</option><option>都響</option><option>東響</option></select>
+    <select id="subs-series"></select>
+    <select id="subs-wd"><option>月</option><option>火</option><option>水</option><option>木</option><option>金</option><option>土</option><option>日</option></select>
+    <button class="btn" id="subs-add">追加</button>
+  </div>
+  <div style="text-align:right;margin-top:14px"><button class="btn" id="subs-close">閉じる</button></div>
+</dialog>
+<main class="wrap">
+  <div id="errors"></div>
+  <div id="view"></div>
+</main>
+
+<script>
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+
+const store = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+  set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} },
+};
+
+let data = { concerts: [], okepi: [] };
+let posts = {};
+let byKey = {};
+// 定期会員の公演。条件に合う公演は最初から「行く」になる（手動で外すことも可）
+// 個人の予定が分かる情報なので、ページには書かずブラウザに保存する（画面の「定期会員の設定」で編集）
+// 例: { orchestra: "N響", series: "定期公演 Aプログラム", weekday: "土" }
+let SUBSCRIPTIONS = store.get("subscriptions", []);
+const isSubscribed = c => SUBSCRIPTIONS.some(s =>
+  s.orchestra === c.orchestra && s.series === c.series && s.weekday === c.weekday);
+
+// 公演キー → "want"（行きたい）| "going"（行く・確定）| "none"（定期会員公演の「行く」を手動で外した）
+const marks = store.get("marks", null) ??
+  Object.fromEntries(store.get("starred", []).map(k => [k, "want"]));  // 旧形式（★のみ）から移行
+let byKeyAll = {};
+
+function markOf(key) {
+  const m = marks[key] ?? (byKeyAll[key] && isSubscribed(byKeyAll[key]) ? "going" : undefined);
+  return m === "none" ? undefined : m;
+}
+const state = Object.assign(
+  { view: "concerts", orchs: ["N響", "都響", "東響"], q: "", month: "", weekend: false, okepi: false, want: false, going: false },
+  store.get("filters", {}),
+);
+delete state.starred;
+
+function toggleMark(key, kind) {
+  const next = markOf(key) === kind ? undefined : kind;
+  const def = isSubscribed(byKeyAll[key] || {}) ? "going" : undefined;
+  if (next === def) delete marks[key];
+  else marks[key] = next ?? "none";
+  store.set("marks", marks);
+}
+
+// 祝日は持っていないので土日のみ判定。タイトルの「祝」表記は都響・東響のみ拾える
+const isWeekend = c => c.weekday === "土" || c.weekday === "日";
+
+function terms() { return state.q.trim().toLowerCase().split(/\s+/).filter(Boolean); }
+
+function hay(c) {
+  return [c.title, c.series, c.hall, ...(c.performers || []), ...(c.program || [])].join(" ").toLowerCase();
+}
+
+function highlight(text) {
+  let s = esc(text);
+  for (const t of terms()) {
+    const re = new RegExp(t.replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/&/g, "&amp;"), "gi");
+    s = s.replace(re, m => `<mark>${m}</mark>`);
+  }
+  return s;
+}
+
+function filtered() {
+  const ts = terms();
+  return data.concerts.filter(c =>
+    state.orchs.includes(c.orchestra) &&
+    (!state.month || c.date.startsWith(state.month)) &&
+    (!state.weekend || isWeekend(c)) &&
+    (!state.okepi || (c.okepi || []).length) &&
+    // 「行きたい」「行く」を両方オンにしたら、どちらかの印がある公演を出す
+    (!(state.want || state.going) || (state.want && markOf(c.key) === "want") || (state.going && markOf(c.key) === "going")) &&
+    ts.every(t => hay(c).includes(t))
+  );
+}
+
+function okepiTable(ids, withConcert) {
+  const rows = ids.map(id => posts[id]).filter(Boolean).sort((a, b) => (a.price ?? 1e9) - (b.price ?? 1e9));
+  if (!rows.length) return `<div class="empty">該当する投稿はありません</div>`;
+  return `<table><thead><tr>
+    ${withConcert ? "<th>公演日</th><th>楽団</th>" : ""}<th>投稿タイトル</th><th>席</th><th>枚数</th><th style="text-align:right">価格/枚</th>
+  </tr></thead><tbody>${rows.map(p => `<tr>
+    ${withConcert ? `<td style="white-space:nowrap">${p.date.slice(5).replace("-", "/")}(${p.weekday}) ${esc(p.time)}</td><td><span class="orch" data-o="${p.orchestra}">${p.orchestra}</span></td>` : ""}
+    <td><a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)}</a></td>
+    <td>${esc(p.seat)}</td><td style="white-space:nowrap">${esc(p.count)}</td>
+    <td class="price">${p.price != null ? p.price.toLocaleString() + "円" : esc(p.trade)}${p.discounted ? '<span class="down">値下げ</span>' : ""}</td>
+  </tr>`).join("")}</tbody></table>`;
+}
+
+function card(c) {
+  const d = new Date(c.date + "T00:00:00");
+  const wcls = c.weekday === "土" ? "sat" : c.weekday === "日" ? "sun" : "";
+  const oke = c.okepi || [];
+  const prices = oke.map(id => posts[id]?.price).filter(p => p != null);
+  const mark = markOf(c.key);
+  return `<article class="card${mark === "want" ? " starred" : mark === "going" ? " going" : ""}" data-key="${esc(c.key)}">
+    <div class="date"><div class="d">${d.getMonth() + 1}/${d.getDate()}</div><div class="w ${wcls}">(${c.weekday})</div><div class="t">${esc(c.time)}</div></div>
+    <div>
+      <div class="meta"><span class="orch" data-o="${c.orchestra}">${c.orchestra}</span>${c.series ? `<span class="series">${esc(c.series)}</span>` : ""}${mark === "going" ? `<span class="gobadge">✓ 行く</span>` : ""}${isSubscribed(c) ? `<span class="series">定期会員</span>` : ""}</div>
+      <div class="title"><a href="${esc(c.url)}" target="_blank" rel="noopener">${highlight(c.title)}</a></div>
+      <div class="hall">${highlight(c.hall)}</div>
+      ${c.performers?.length ? `<div class="perf">${c.performers.map(highlight).join("　")}</div>` : ""}
+      ${c.program?.length ? `<div class="prog">${c.program.map(p => `<div>${highlight(p)}</div>`).join("")}</div>` : ""}
+    </div>
+    <div class="side">
+      <div class="marks">
+        <button class="mark want${mark === "want" ? " on" : ""}" data-kind="want">★ 行きたい</button>
+        <button class="mark going${mark === "going" ? " on" : ""}" data-kind="going">✓ 行く</button>
+      </div>
+      ${oke.length ? `<button class="okebtn">おけぴ <b>${oke.length}</b>件${prices.length ? `・${Math.min(...prices).toLocaleString()}円〜` : ""}</button>` : ""}
+    </div>
+    ${oke.length ? `<div class="okelist">${okepiTable(oke, false)}</div>` : ""}
+  </article>`;
+}
+
+function render() {
+  store.set("filters", state);
+  $$(".tab").forEach(t => t.classList.toggle("on", t.dataset.view === state.view));
+  $$(".chip[data-o]").forEach(ch => ch.classList.toggle("on", state.orchs.includes(ch.dataset.o)));
+  $$(".chip[data-flag]").forEach(ch => ch.classList.toggle("on", !!state[ch.dataset.flag]));
+  $("#q").value = state.q;
+  $("#month").value = state.month;
+
+  // 発売情報タブでは、楽団とキーワード以外の絞り込みは使わない
+  $$("#month, .chip[data-flag]").forEach(el => el.style.display = state.view === "sales" ? "none" : "");
+  if (state.view === "sales") { renderSales(); return; }
+
+  if (state.view === "okepi") {
+    const ts = terms();
+    const ps = data.okepi.filter(p =>
+      state.orchs.includes(p.orchestra) &&
+      (!state.month || p.date.startsWith(state.month)) &&
+      (!state.weekend || isWeekend(p)) &&
+      ts.every(t => (p.title + " " + p.hall + " " + p.seat + " " + (byKey[p.concert_key] ? hay(byKey[p.concert_key]) : "")).toLowerCase().includes(t))
+    ).sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time));
+    $("#count").textContent = `${ps.length} 件`;
+    $("#view").innerHTML = `<p class="count">おけぴ掲示板の譲渡投稿のうち、N響・都響・東響の名前で検索してヒットしたもの（価格は1枚あたり）。</p>
+      <div class="tablewrap">${okepiTable(ps.map(p => p.id), true)}</div>`;
+    return;
+  }
+
+  const list = filtered();
+  $("#count").textContent = `${list.length} 公演`;
+  if (!list.length) { $("#view").innerHTML = `<div class="empty">条件に合う公演がありません</div>`; return; }
+  let html = "", cur = "";
+  for (const c of list) {
+    const ym = c.date.slice(0, 7);
+    if (ym !== cur) { cur = ym; html += `<h2 class="month">${+ym.slice(0, 4)}年${+ym.slice(5)}月</h2>`; }
+    html += card(c);
+  }
+  $("#view").innerHTML = html;
+}
+
+// ---------------------------------------------------------------- 発売情報
+const todayStr = () => { const d = new Date(); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`; };
+const daysUntil = s => Math.round((new Date(s + "T00:00:00") - new Date(todayStr() + "T00:00:00")) / 864e5);
+const saleId = s => [s.orchestra, s.date, s.time, s.label, s.target].join("|");
+// 対象が1公演だけなら、券種名より公演名のほうが分かりやすい
+const saleTitle = s => s.concerts.length === 1 && byKey[s.concerts[0]] ? `${s.target}：${byKey[s.concerts[0]].title}` : s.target;
+
+function filteredSales() {
+  const ts = terms();
+  return (data.sales || []).filter(s =>
+    state.orchs.includes(s.orchestra) &&
+    ts.every(t => [s.label, s.target, s.type, ...s.concerts.map(k => byKey[k] ? hay(byKey[k]) : "")].join(" ").toLowerCase().includes(t))
+  );
+}
+
+function saleRow(s) {
+  const n = daysUntil(s.date);
+  const cd = n < 0 ? "発売済み" : n === 0 ? "今日" : n === 1 ? "明日" : `あと${n}日`;
+  const cs = s.concerts.map(k => byKey[k]).filter(Boolean);
+  const wants = cs.filter(c => markOf(c.key) === "want");
+  return `<div class="sale${n < 0 ? " past" : ""}${wants.length && n >= 0 ? " hot" : ""}" data-sale="${esc(saleId(s))}">
+    <div class="when">${+s.date.slice(5, 7)}/${+s.date.slice(8)}(${s.weekday}) ${esc(s.time)}
+      <small>${s.date.slice(0, 4)}年</small><span class="cd${n >= 0 && n <= 7 ? " soon" : ""}">${cd}</span></div>
+    <div>
+      <div class="meta"><span class="orch" data-o="${s.orchestra}">${s.orchestra}</span><span class="series">${esc(s.type)}</span>
+        ${wants.length ? `<span class="hotnote">★ 行きたい公演 ${wants.length}件を含む</span>` : ""}</div>
+      <div class="what">${highlight(saleTitle(s))}<span class="label">${esc(s.label)}</span></div>
+      ${cs.length ? `<details><summary>対象公演 ${cs.length}件</summary><ul>${cs.map(c =>
+        `<li>${+c.date.slice(5, 7)}/${+c.date.slice(8)}(${c.weekday}) ${highlight(c.title)}${markOf(c.key) === "want" ? " ★" : markOf(c.key) === "going" ? " ✓" : ""}</li>`).join("")}</ul></details>` : ""}
+    </div>
+    <div class="acts">
+      ${n >= 0 ? `<button class="btn ics" style="font-size:12px;padding:3px 8px">カレンダーに追加</button>` : ""}
+      <a href="${esc(s.url)}" target="_blank" rel="noopener">公式ページ</a>
+    </div>
+  </div>`;
+}
+
+function renderSales() {
+  const list = filteredSales();
+  const today = todayStr();
+  const upcoming = list.filter(s => s.date >= today);
+  // 最近発売されたもの（2週間以内）は「発売中」として下に出す
+  const recent = list.filter(s => s.date < today && daysUntil(s.date) >= -14).reverse();
+  const news = (data.news || []).filter(n => state.orchs.includes(n.orchestra));
+  $("#count").textContent = `今後の発売 ${upcoming.length} 件`;
+  $("#view").innerHTML = `
+    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px">
+      <p class="section-note" style="margin:0;flex:1 1 300px">各楽団の公式サイトに載っている発売日です。★「行きたい」を付けた公演が含まれる発売は黄色の線で示します。
+      「カレンダーに追加」でスマホやMacのカレンダーに登録できます（前日と1時間前に通知）。</p>
+      ${upcoming.length ? `<button class="btn" id="ics-all">表示中の発売日をまとめてカレンダーに追加</button>` : ""}
+    </div>
+    <h2 class="month">これからの発売</h2>
+    ${upcoming.length ? upcoming.map(saleRow).join("") : `<div class="empty">予定されている発売日はありません</div>`}
+    ${recent.length ? `<h2 class="month">最近発売されたもの（2週間以内）</h2>${recent.map(saleRow).join("")}` : ""}
+    <h2 class="month">チケット関連のお知らせ（各楽団のニュースより）</h2>
+    <p class="section-note">発売日の一覧に載らない特別公演や、会員券の案内などはこちらで確認してください。</p>
+    ${news.length ? `<ul class="news">${news.map(n => `<li><span class="orch" data-o="${n.orchestra}">${n.orchestra}</span> ${esc(n.date)}　<a href="${esc(n.url)}" target="_blank" rel="noopener">${esc(n.title)}</a></li>`).join("")}</ul>` : `<div class="empty">直近のお知らせはありません</div>`}`;
+  const btn = $("#ics-all");
+  if (btn) btn.onclick = () => downloadIcs(upcoming, "発売日まとめ.ics");
+}
+
+function icsEvent(s) {
+  const d = s.date.replaceAll("-", "");
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d+/, "");
+  const title = `【発売】${s.orchestra} ${saleTitle(s)} ${s.label}`;
+  const cs = s.concerts.map(k => byKey[k]).filter(Boolean);
+  const desc = [s.url, ...cs.map(c => `${c.date} ${c.title}`)].join("\\n");
+  const icsEsc = t => t.replace(/[,;]/g, m => "\\" + m);
+  const lines = ["BEGIN:VEVENT", `UID:${encodeURIComponent(saleId(s))}@classic-portal`, `DTSTAMP:${stamp}`];
+  if (s.time) {
+    const t = s.time.replace(":", "") + "00";
+    lines.push(`DTSTART;TZID=Asia/Tokyo:${d}T${t}`, `DTEND;TZID=Asia/Tokyo:${d}T${t}`);
+  } else {
+    const next = new Date(s.date + "T00:00:00"); next.setDate(next.getDate() + 1);
+    lines.push(`DTSTART;VALUE=DATE:${d}`, `DTEND;VALUE=DATE:${next.getFullYear()}${String(next.getMonth() + 1).padStart(2, "0")}${String(next.getDate()).padStart(2, "0")}`);
+  }
+  lines.push(`SUMMARY:${icsEsc(title)}`, `DESCRIPTION:${icsEsc(desc)}`, `URL:${s.url}`,
+    // 前日と、時刻があれば1時間前（終日なら当日朝）に通知
+    "BEGIN:VALARM", "ACTION:DISPLAY", `DESCRIPTION:${icsEsc(title)}`, `TRIGGER:${s.time ? "-P1D" : "-PT15H"}`, "END:VALARM",
+    "BEGIN:VALARM", "ACTION:DISPLAY", `DESCRIPTION:${icsEsc(title)}`, `TRIGGER:${s.time ? "-PT1H" : "PT9H"}`, "END:VALARM",
+    "END:VEVENT");
+  return lines.join("\r\n");
+}
+
+function downloadIcs(list, name) {
+  const body = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//classic-portal//JA", "CALSCALE:GREGORIAN",
+    ...list.map(icsEvent), "END:VCALENDAR"].join("\r\n");
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([body], { type: "text/calendar;charset=utf-8" }));
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+async function load() {
+  const res = await fetch("data/concerts.json", { cache: "no-store" });
+  data = await res.json();
+  posts = Object.fromEntries(data.okepi.map(p => [p.id, p]));
+  byKey = byKeyAll = Object.fromEntries(data.concerts.map(c => [c.key, c]));
+  $("#updated").textContent = `データ取得: ${data.updated.replace("T", " ")}${isLocal ? "" : "（毎朝自動更新）"}`;
+  const months = [...new Set(data.concerts.map(c => c.date.slice(0, 7)))].sort();
+  $("#month").innerHTML = `<option value="">すべての月</option>` +
+    months.map(m => `<option value="${m}">${+m.slice(0, 4)}年${+m.slice(5)}月</option>`).join("");
+  if (!months.includes(state.month)) state.month = "";
+  const errs = Object.entries(data.errors || {});
+  $("#errors").innerHTML = errs.length ? `<div class="errors">取得に失敗したサイトがあります: ${errs.map(([k, v]) => `${esc(k)}（${esc(v)}）`).join("、")}</div>` : "";
+  render();
+}
+
+$$(".tab").forEach(t => t.onclick = () => { state.view = t.dataset.view; render(); });
+$$(".chip[data-o]").forEach(ch => ch.onclick = () => {
+  const o = ch.dataset.o;
+  state.orchs = state.orchs.includes(o) ? state.orchs.filter(x => x !== o) : [...state.orchs, o];
+  render();
+});
+$$(".chip[data-flag]").forEach(ch => ch.onclick = () => { state[ch.dataset.flag] = !state[ch.dataset.flag]; render(); });
+let qTimer;
+$("#q").oninput = e => { clearTimeout(qTimer); qTimer = setTimeout(() => { state.q = e.target.value; render(); }, 150); };
+$("#month").onchange = e => { state.month = e.target.value; render(); };
+
+$("#view").addEventListener("click", e => {
+  if (e.target.closest(".ics")) {
+    const id = e.target.closest(".sale").dataset.sale;
+    const s = data.sales.find(x => saleId(x) === id);
+    if (s) downloadIcs([s], `発売_${s.orchestra}_${s.date}.ics`);
+    return;
+  }
+  const cardEl = e.target.closest(".card");
+  if (!cardEl) return;
+  const markBtn = e.target.closest(".mark");
+  if (markBtn) {
+    toggleMark(cardEl.dataset.key, markBtn.dataset.kind);
+    render();
+  } else if (e.target.closest(".okebtn")) {
+    cardEl.classList.toggle("open");
+  }
+});
+
+// ---------------------------------------------------------------- 定期会員の設定
+function renderSubs() {
+  $("#subs-list").innerHTML = SUBSCRIPTIONS.length
+    ? SUBSCRIPTIONS.map((s, i) => `<li>${esc(s.orchestra)}　${esc(s.series)}　${esc(s.weekday)}曜<button class="btn" data-i="${i}">削除</button></li>`).join("")
+    : `<li style="list-style:none;margin-left:-18px;color:var(--muted)">まだ登録はありません</li>`;
+  // シリーズの候補は、取得した公演データにあるものから作る
+  const series = [...new Set(data.concerts.filter(c => c.orchestra === $("#subs-orch").value && c.series).map(c => c.series))].sort();
+  $("#subs-series").innerHTML = series.map(s => `<option>${esc(s)}</option>`).join("");
+}
+function saveSubs() { store.set("subscriptions", SUBSCRIPTIONS); renderSubs(); render(); }
+$("#subs-open").onclick = () => { renderSubs(); $("#subs").showModal(); };
+$("#subs-close").onclick = () => $("#subs").close();
+$("#subs-orch").onchange = renderSubs;
+$("#subs-add").onclick = () => {
+  const s = { orchestra: $("#subs-orch").value, series: $("#subs-series").value, weekday: $("#subs-wd").value };
+  if (s.series && !SUBSCRIPTIONS.some(x => JSON.stringify(x) === JSON.stringify(s))) { SUBSCRIPTIONS.push(s); saveSubs(); }
+};
+$("#subs-list").onclick = e => {
+  const b = e.target.closest("button[data-i]");
+  if (b) { SUBSCRIPTIONS.splice(+b.dataset.i, 1); saveSubs(); }
+};
+
+// インターネット上（GitHub Pages）では毎朝自動で更新されるので、更新ボタンは手元のMacで動かすときだけ出す
+const isLocal = ["localhost", "127.0.0.1"].includes(location.hostname);
+if (!isLocal) $("#refresh").hidden = true;
+
+$("#refresh").onclick = async () => {
+  const b = $("#refresh");
+  b.disabled = true; b.textContent = "取得中…（1〜2分）";
+  try {
+    const r = await fetch("api/refresh", { method: "POST" });
+    const j = await r.json();
+    if (!j.ok) alert("更新に失敗しました\n\n" + j.log);
+    await load();
+  } catch (err) {
+    alert("サーバーに接続できません。python3 server.py で起動しているか確認してください。");
+  } finally {
+    b.disabled = false; b.textContent = "最新に更新";
+  }
+};
+
+load().catch(() => {
+  $("#view").innerHTML = `<div class="empty">data/concerts.json を読み込めません。<br>ターミナルで <code>python3 server.py</code> を実行して開いてください。</div>`;
+});
+</script>
+</body>
+</html>
