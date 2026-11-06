@@ -1,5 +1,5 @@
 {
- "updated": "2026-11-06T06:42",
+ "updated": "2026-11-07T06:37",
  "concerts": [
   {
    "orchestra": "都響",
@@ -70,8 +70,8 @@
     "5324028",
     "5341410",
     "5332521",
-    "5342139",
     "5335495",
+    "5342139",
     "5336499"
    ]
   },
@@ -195,8 +195,8 @@
    "url": "https://www.nhkso.or.jp/concert/202611C.html",
    "key": "N響|2026-11-14|14:00|第2075回 定期公演 Cプログラム",
    "okepi": [
-    "5342648",
-    "5337912"
+    "5337912",
+    "5342648"
    ]
   },
   {
@@ -231,20 +231,21 @@
     "ピアノ／ピョートル・アンデルシェフスキ"
    ],
    "program": [
-    "ベートーヴェン：ベートーヴェン：ピアノ協奏曲第1番 ハ長調 op.15",
+    "ベートーヴェン：ピアノ協奏曲第1番 ハ長調 op.15",
     "ベートーヴェン：交響曲第3番 変ホ長調 op.55《英雄》"
    ],
    "url": "https://www.tmso.or.jp/j/concert/detail/detail.php?id=4099",
    "key": "都響|2026-11-14|14:00|第1057回定期演奏会Aシリーズ",
    "okepi": [
+    "5343274",
     "5335353",
     "5336333",
     "5339694",
     "5338691",
     "5270664",
     "5306710",
-    "5342498",
     "5342146",
+    "5342498",
     "5335106",
     "5301983",
     "5321925"
@@ -620,7 +621,10 @@
     "ベートーヴェン／交響曲 第7番 イ長調 作品92"
    ],
    "url": "https://www.nhkso.or.jp/concert/202612C.html",
-   "key": "N響|2026-12-04|19:00|第2078回 定期公演 Cプログラム"
+   "key": "N響|2026-12-04|19:00|第2078回 定期公演 Cプログラム",
+   "okepi": [
+    "5343423"
+   ]
   },
   {
    "orchestra": "東響",
@@ -647,6 +651,7 @@
    "url": "https://tokyosymphony.jp/concert/57622/",
    "key": "東響|2026-12-04|19:00|東京オペラシティシリーズ 第155回",
    "okepi": [
+    "5343228",
     "5333101",
     "5334237"
    ]
@@ -749,6 +754,7 @@
    "url": "https://www.nhkso.or.jp/concert/202612B.html",
    "key": "N響|2026-12-10|19:00|第2079回 定期公演 Bプログラム",
    "okepi": [
+    "5343139",
     "5333109",
     "5324309",
     "5318162",
@@ -857,7 +863,10 @@
     "チャイコフスキー：交響曲第4番 ヘ短調 op.36"
    ],
    "url": "https://www.tmso.or.jp/j/concert/detail/detail.php?id=4103",
-   "key": "都響|2026-12-13|14:00|プロムナードコンサートNo.421 【前売販売終了】"
+   "key": "都響|2026-12-13|14:00|プロムナードコンサートNo.421 【前売販売終了】",
+   "okepi": [
+    "5343265"
+   ]
   },
   {
    "orchestra": "N響",
@@ -1461,7 +1470,6 @@
    "url": "https://www.nhkso.or.jp/concert/202701A.html",
    "key": "N響|2027-01-16|18:00|第2080回 定期公演 Aプログラム",
    "okepi": [
-    "5336908",
     "5250303"
    ]
   },
@@ -1824,8 +1832,8 @@
    "okepi": [
     "5286570",
     "5318973",
-    "5337277",
-    "5325605"
+    "5325605",
+    "5337277"
    ]
   },
   {
@@ -4658,7 +4666,7 @@
    "seat": "1階R9列6-8番",
    "count": "1枚",
    "trade": "譲渡価格",
-   "price": 4800,
+   "price": 4000,
    "discounted": true,
    "url": "https://okepi.net/bbs/posting/detail/5341542",
    "concert_key": "N響|2026-11-07|18:00|第2074回 定期公演 Aプログラム"
@@ -4808,22 +4816,6 @@
    "concert_key": "N響|2026-11-08|14:00|第2074回 定期公演 Aプログラム"
   },
   {
-   "id": "5342139",
-   "orchestra": "N響",
-   "date": "2026-11-08",
-   "weekday": "日",
-   "time": "14:00",
-   "title": "NHK交響楽団 第2074回 定期公演(Aプログラム2日目)",
-   "hall": "NHKホール(東京)",
-   "seat": "S席2階C1列30番台前半",
-   "count": "1枚",
-   "trade": "譲渡価格",
-   "price": 7000,
-   "discounted": true,
-   "url": "https://okepi.net/bbs/posting/detail/5342139",
-   "concert_key": "N響|2026-11-08|14:00|第2074回 定期公演 Aプログラム"
-  },
-  {
    "id": "5335495",
    "orchestra": "N響",
    "date": "2026-11-08",
@@ -4837,6 +4829,22 @@
    "price": 7500,
    "discounted": true,
    "url": "https://okepi.net/bbs/posting/detail/5335495",
+   "concert_key": "N響|2026-11-08|14:00|第2074回 定期公演 Aプログラム"
+  },
+  {
+   "id": "5342139",
+   "orchestra": "N響",
+   "date": "2026-11-08",
+   "weekday": "日",
+   "time": "14:00",
+   "title": "NHK交響楽団 第2074回 定期公演(Aプログラム2日目)",
+   "hall": "NHKホール(東京)",
+   "seat": "S席2階C1列30番台前半",
+   "count": "1枚",
+   "trade": "譲渡価格",
+   "price": 5500,
+   "discounted": true,
+   "url": "https://okepi.net/bbs/posting/detail/5342139",
    "concert_key": "N響|2026-11-08|14:00|第2074回 定期公演 Aプログラム"
   },
   {
@@ -5008,8 +5016,8 @@
    "seat": "S席2階C1列10番台前半",
    "count": "1枚",
    "trade": "譲渡価格",
-   "price": 8500,
-   "discounted": false,
+   "price": 8000,
+   "discounted": true,
    "url": "https://okepi.net/bbs/posting/detail/5342143",
    "concert_key": "N響|2026-11-13|19:00|第2075回 定期公演 Cプログラム"
   },
@@ -5030,22 +5038,6 @@
    "concert_key": "N響|2026-11-13|19:00|第2075回 定期公演 Cプログラム"
   },
   {
-   "id": "5342648",
-   "orchestra": "N響",
-   "date": "2026-11-14",
-   "weekday": "土",
-   "time": "14:00",
-   "title": "N響Cプロ2日目 ソヒエフ田園",
-   "hall": "NHKホール(東京)",
-   "seat": "S席1階12列10番付近",
-   "count": "1枚",
-   "trade": "譲渡価格",
-   "price": 8500,
-   "discounted": false,
-   "url": "https://okepi.net/bbs/posting/detail/5342648",
-   "concert_key": "N響|2026-11-14|14:00|第2075回 定期公演 Cプログラム"
-  },
-  {
    "id": "5337912",
    "orchestra": "N響",
    "date": "2026-11-14",
@@ -5062,6 +5054,38 @@
    "concert_key": "N響|2026-11-14|14:00|第2075回 定期公演 Cプログラム"
   },
   {
+   "id": "5342648",
+   "orchestra": "N響",
+   "date": "2026-11-14",
+   "weekday": "土",
+   "time": "14:00",
+   "title": "N響Cプロ2日目 ソヒエフ田園",
+   "hall": "NHKホール(東京)",
+   "seat": "S席1階12列10番付近",
+   "count": "1枚",
+   "trade": "譲渡価格",
+   "price": 8500,
+   "discounted": false,
+   "url": "https://okepi.net/bbs/posting/detail/5342648",
+   "concert_key": "N響|2026-11-14|14:00|第2075回 定期公演 Cプログラム"
+  },
+  {
+   "id": "5343274",
+   "orchestra": "都響",
+   "date": "2026-11-14",
+   "weekday": "土",
+   "time": "14:00",
+   "title": "都響定期Aシリーズ メルクルの英雄 ステージサイド席",
+   "hall": "東京芸術劇場(東京)",
+   "seat": "C席2階LBA列一桁番台通路側",
+   "count": "1枚",
+   "trade": "譲渡価格",
+   "price": 3150,
+   "discounted": false,
+   "url": "https://okepi.net/bbs/posting/detail/5343274",
+   "concert_key": "都響|2026-11-14|14:00|第1057回定期演奏会Aシリーズ"
+  },
+  {
    "id": "5335353",
    "orchestra": "都響",
    "date": "2026-11-14",
@@ -5069,7 +5093,7 @@
    "time": "14:00",
    "title": "都響 定期演奏会 Aシリーズ",
    "hall": "東京芸術劇場コンサートホール（東京都）(東京)",
-   "seat": "A席一階D列20番台前半",
+   "seat": "A席1階D列20番台前半",
    "count": "1枚",
    "trade": "譲渡価格",
    "price": 3200,
@@ -5158,6 +5182,22 @@
    "concert_key": "都響|2026-11-14|14:00|第1057回定期演奏会Aシリーズ"
   },
   {
+   "id": "5342146",
+   "orchestra": "都響",
+   "date": "2026-11-14",
+   "weekday": "土",
+   "time": "14:00",
+   "title": "東京都交響楽団 第1057回 定期演奏会Aシリーズ",
+   "hall": "東京芸術劇場コンサートホール(東京)",
+   "seat": "S席2階B列30番台前半",
+   "count": "1枚",
+   "trade": "譲渡価格",
+   "price": 4500,
+   "discounted": true,
+   "url": "https://okepi.net/bbs/posting/detail/5342146",
+   "concert_key": "都響|2026-11-14|14:00|第1057回定期演奏会Aシリーズ"
+  },
+  {
    "id": "5342498",
    "orchestra": "都響",
    "date": "2026-11-14",
@@ -5171,22 +5211,6 @@
    "price": 4000,
    "discounted": true,
    "url": "https://okepi.net/bbs/posting/detail/5342498",
-   "concert_key": "都響|2026-11-14|14:00|第1057回定期演奏会Aシリーズ"
-  },
-  {
-   "id": "5342146",
-   "orchestra": "都響",
-   "date": "2026-11-14",
-   "weekday": "土",
-   "time": "14:00",
-   "title": "東京都交響楽団 第1057回 定期演奏会Aシリーズ",
-   "hall": "東京芸術劇場コンサートホール(東京)",
-   "seat": "S席2階B列30番台前半",
-   "count": "1枚",
-   "trade": "譲渡価格",
-   "price": 4700,
-   "discounted": false,
-   "url": "https://okepi.net/bbs/posting/detail/5342146",
    "concert_key": "都響|2026-11-14|14:00|第1057回定期演奏会Aシリーズ"
   },
   {
@@ -5542,6 +5566,38 @@
    "concert_key": "都響|2026-11-29|14:00|都響スペシャル（11/29）"
   },
   {
+   "id": "5343423",
+   "orchestra": "N響",
+   "date": "2026-12-04",
+   "weekday": "金",
+   "time": "19:00",
+   "title": "デュトワ/N響 ベト47",
+   "hall": "NHKホール(東京)",
+   "seat": "E席3階Ｌ９列10番台",
+   "count": "1枚",
+   "trade": "譲渡価格",
+   "price": 2970,
+   "discounted": false,
+   "url": "https://okepi.net/bbs/posting/detail/5343423",
+   "concert_key": "N響|2026-12-04|19:00|第2078回 定期公演 Cプログラム"
+  },
+  {
+   "id": "5343228",
+   "orchestra": "東響",
+   "date": "2026-12-04",
+   "weekday": "金",
+   "time": "19:00",
+   "title": "東京交響楽団 オペラシティシリーズ12月 沼尻竜典",
+   "hall": "東京オペラシティコンサートホール(東京)",
+   "seat": "B席3階L1列10番台通路側",
+   "count": "1枚",
+   "trade": "譲渡価格",
+   "price": 3000,
+   "discounted": true,
+   "url": "https://okepi.net/bbs/posting/detail/5343228",
+   "concert_key": "東響|2026-12-04|19:00|東京オペラシティシリーズ 第155回"
+  },
+  {
    "id": "5333101",
    "orchestra": "東響",
    "date": "2026-12-04",
@@ -5622,6 +5678,22 @@
    "concert_key": "東響|2026-12-05|14:00|名曲全集 第222回＜後期＞"
   },
   {
+   "id": "5343139",
+   "orchestra": "N響",
+   "date": "2026-12-10",
+   "weekday": "木",
+   "time": "19:00",
+   "title": "エメリャニチェフ N響 Bプロ 1日目初日",
+   "hall": "サントリーホール(東京)",
+   "seat": "RA4〜６列",
+   "count": "1枚",
+   "trade": "譲渡価格",
+   "price": 8500,
+   "discounted": false,
+   "url": "https://okepi.net/bbs/posting/detail/5343139",
+   "concert_key": "N響|2026-12-10|19:00|第2079回 定期公演 Bプログラム"
+  },
+  {
    "id": "5333109",
    "orchestra": "N響",
    "date": "2026-12-10",
@@ -5696,8 +5768,8 @@
    "seat": "D席2階P7列",
    "count": "1枚",
    "trade": "譲渡価格",
-   "price": 4675,
-   "discounted": false,
+   "price": 4100,
+   "discounted": true,
    "url": "https://okepi.net/bbs/posting/detail/5314400",
    "concert_key": "N響|2026-12-11|19:00|第2079回 定期公演 Bプログラム"
   },
@@ -5860,6 +5932,22 @@
    "discounted": false,
    "url": "https://okepi.net/bbs/posting/detail/5249654",
    "concert_key": "東響|2026-12-12|18:00|第748回 定期演奏会"
+  },
+  {
+   "id": "5343265",
+   "orchestra": "都響",
+   "date": "2026-12-13",
+   "weekday": "日",
+   "time": "14:00",
+   "title": "都響プロムナードNo.421 チェクナヴォリアン ババヤン",
+   "hall": "サントリーホール(東京)",
+   "seat": "P席2階P5列20番台前半",
+   "count": "1枚",
+   "trade": "譲渡価格",
+   "price": 2400,
+   "discounted": false,
+   "url": "https://okepi.net/bbs/posting/detail/5343265",
+   "concert_key": "都響|2026-12-13|14:00|プロムナードコンサートNo.421 【前売販売終了】"
   },
   {
    "id": "5322998",
@@ -6086,22 +6174,6 @@
    "concert_key": "N響|2027-01-10|15:00|創立100年記念 N響ニューイヤーコンサート"
   },
   {
-   "id": "5336908",
-   "orchestra": "N響",
-   "date": "2027-01-16",
-   "weekday": "土",
-   "time": "18:00",
-   "title": "Ｎ響『マラ９』Ｄ席［送料込み］⇒ ご希望で デュトワ又はヴァイグレ初日",
-   "hall": "ＮＨＫホール(東京)",
-   "seat": "３階Ｃ５列１０番台",
-   "count": "1枚",
-   "trade": "譲渡価格",
-   "price": 4000,
-   "discounted": true,
-   "url": "https://okepi.net/bbs/posting/detail/5336908",
-   "concert_key": "N響|2027-01-16|18:00|第2080回 定期公演 Aプログラム"
-  },
-  {
    "id": "5250303",
    "orchestra": "N響",
    "date": "2027-01-16",
@@ -6123,12 +6195,12 @@
    "date": "2027-01-17",
    "weekday": "日",
    "time": "14:00",
-   "title": "Ｎ響『マラ９』Ｂ席［送料込み］⇒ ご希望で デュトワ［ベト４＆７］千秋楽",
+   "title": "Ｎ響『マラ９』Ｓ席～Ｄ席［完売］千秋楽",
    "hall": "ＮＨＫホール(東京)",
-   "seat": "２階Ｌ１〇列／通路側…",
+   "seat": "Ｂ席《通路側》２階Ｌ１◯列",
    "count": "1枚",
    "trade": "譲渡価格",
-   "price": 6000,
+   "price": 5500,
    "discounted": true,
    "url": "https://okepi.net/bbs/posting/detail/5336967",
    "concert_key": "N響|2027-01-17|14:00|第2080回 定期公演 Aプログラム"
@@ -6324,22 +6396,6 @@
    "concert_key": "N響|2027-02-07|14:00|第2082回 定期公演 Aプログラム"
   },
   {
-   "id": "5337277",
-   "orchestra": "N響",
-   "date": "2027-02-07",
-   "weekday": "日",
-   "time": "14:00",
-   "title": "NHKSO 第2082回 指揮 アントネッロマナコルダ",
-   "hall": "NHKホール(東京)",
-   "seat": "D席3階C4列20番台",
-   "count": "1枚",
-   "trade": "譲渡価格",
-   "price": 3490,
-   "discounted": true,
-   "url": "https://okepi.net/bbs/posting/detail/5337277",
-   "concert_key": "N響|2027-02-07|14:00|第2082回 定期公演 Aプログラム"
-  },
-  {
    "id": "5325605",
    "orchestra": "N響",
    "date": "2027-02-07",
@@ -6353,6 +6409,22 @@
    "price": 8500,
    "discounted": false,
    "url": "https://okepi.net/bbs/posting/detail/5325605",
+   "concert_key": "N響|2027-02-07|14:00|第2082回 定期公演 Aプログラム"
+  },
+  {
+   "id": "5337277",
+   "orchestra": "N響",
+   "date": "2027-02-07",
+   "weekday": "日",
+   "time": "14:00",
+   "title": "NHKSO 第2082回 指揮 アントネッロマナコルダ",
+   "hall": "NHKホール(東京)",
+   "seat": "D席3階C4列20番台",
+   "count": "1枚",
+   "trade": "譲渡価格",
+   "price": 3490,
+   "discounted": true,
+   "url": "https://okepi.net/bbs/posting/detail/5337277",
    "concert_key": "N響|2027-02-07|14:00|第2082回 定期公演 Aプログラム"
   },
   {
